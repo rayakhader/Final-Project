@@ -14,7 +14,7 @@
 
 .login h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #0077b6; /* ocean blue, travel vibe */
+    color: #0077b6;
     margin-bottom: 20px;
 }
 
@@ -60,12 +60,38 @@ input:focus {
 .login-btn:hover {
     background: linear-gradient(135deg, #0077b6, #023e8a);
 }
+
 .login-btn:disabled {
     background: #ccc;
     cursor: not-allowed;
 }
-.error{
-    color: #d90429; 
+
+.error {
+    color: #d90429;
     font-size: 0.9rem;
     margin: 0;
+}
+
+.msg {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #d4edda;
+    border-radius: 4px;
+    font-weight: bold;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+.login-success {
+    color: #155724;
+}
+
+.login-failed {
+    color: #721c24;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }
