@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './login.css'
 import { LoginAPI } from '../../APIs/Auth/Login';
 import { useNavigate } from 'react-router-dom';
+import Message from './Message';
 function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -9,8 +10,10 @@ function Login() {
         username: '',
         password: ''
     });
-    const navigate = useNavigate();
     const [success, setSuccess] = useState(false);
+    const [hasAttemptedLogin, setHasAttemptedLogin] = useState(false);
+    const navigate = useNavigate();
+
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -18,22 +21,24 @@ function Login() {
             .then((data) => {
                 localStorage.setItem('token', data.authentication);
                 localStorage.setItem('userType', data.userType);
+                setHasAttemptedLogin(true)
                 setSuccess(true);
                 setTimeout(() => {
                     navigate('/')
                 }, 2000);
             }).catch((error) => {
                 console.error('Login error:', error);
+                setHasAttemptedLogin(true)
                 setSuccess(false);
             });
 
 
     }
     function validateUsername(username: string) {
-        if (username.length < 3) {
+        if (username.length < 4) {
             setErrors({
                 ...errors,
-                username: 'Username must be at least 3 characters long'
+                username: 'Username must be at least 4 characters long'
             });
             return;
         }
@@ -61,44 +66,11 @@ function Login() {
         }
     }
     function validatePassword(password: string) {
-        if (password.length < 8) {
+        if (password.length < 4) {
             setErrors({
                 ...errors,
                 password:
-                    'Password must be at least 8 characters long'
-            });
-        } else if (password.length > 20) {
-            setErrors({
-                ...errors,
-                password:
-                    'Password must be less than 20 characters long'
-            });
-        } else if (!/[A-Z]/.test(password)) {
-            setErrors({
-                ...errors,
-                password:
-                    'Password must contain at least one uppercase letter'
-            });
-        }
-        else if (!/[a-z]/.test(password)) {
-            setErrors({
-                ...errors,
-                password:
-                    'Password must contain at least one lowercase letter'
-            });
-        }
-        else if (!/[0-9]/.test(password)) {
-            setErrors({
-                ...errors,
-                password:
-                    'Password must contain at least one number'
-            });
-        }
-        else if (!/[!@#$%^&*]/.test(password)) {
-            setErrors({
-                ...errors,
-                password:
-                    'Password must contain at least one special character'
+                    'Password must be at least 4 characters long'
             });
         }
         else {
@@ -131,17 +103,9 @@ function Login() {
                 {errors.password && <p className='error'>{errors.password}</p>}
                 <button disabled={!username || !password || Boolean(errors.password) || Boolean(errors.username)} type='submit' className='login-btn'>Login</button>
             </form>
-            {success && (
-                <div className="msg login-success">
-                    Login successful
-                </div>
-            )}
-            {
-                !success &&
-                <div className="msg login-failed">
-                    Invalid username or password
-                </div>
-            }
+            {hasAttemptedLogin && (success ?(
+                <Message message="Login successful" />
+            ):<Message message="Invalid password or email" />)}
         </div>
     )
 }

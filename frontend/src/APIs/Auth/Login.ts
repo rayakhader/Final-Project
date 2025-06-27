@@ -1,28 +1,18 @@
 export const LoginAPI = (username: string, password: string) => {
-  return fetch('http://localhost:4000/auth/login', {
+  return fetch('https://hotel.foothilltech.net/api/auth/authenticate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ username, password })
   })
-  .then(async response => {
+  .then( response => {
     if (!response.ok) {
-      let errorMessage = 'Login failed';
-      try {
-        const errorData = await response.json();
-        if (errorData.message) {
-          errorMessage = errorData.message;
-        }
-      } catch (e) {
-      }
-      throw new Error(errorMessage);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-
     return response.json(); 
   })
   .catch(error => {
-    console.error('Error:', error.message);
     throw error;  
   });
 };
