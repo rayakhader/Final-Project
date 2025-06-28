@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { getSearchResults } from '../../APIs/Home/getSearchResults';
+import { getSearchResults } from '../../APIs/SearchResults/getSearchResults';
 import { FaShoppingBag } from 'react-icons/fa';
 import './search.css'
 type Amenity = {
