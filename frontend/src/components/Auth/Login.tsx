@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './login.css'
 import { LoginAPI } from '../../APIs/Auth/Login';
 import { useNavigate } from 'react-router-dom';
 import Message from './Message';
+import { TokenContext } from '../../context/TokenProvider';
 function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -13,6 +14,7 @@ function Login() {
     const [success, setSuccess] = useState(false);
     const [hasAttemptedLogin, setHasAttemptedLogin] = useState(false);
     const navigate = useNavigate();
+    const { setToken } = useContext(TokenContext)
 
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -24,6 +26,7 @@ function Login() {
                 setHasAttemptedLogin(true)
                 setSuccess(true);
                 setTimeout(() => {
+                    setToken(data.authentication)
                     navigate('/')
                 }, 2000);
             }).catch((error) => {
@@ -103,9 +106,9 @@ function Login() {
                 {errors.password && <p className='error'>{errors.password}</p>}
                 <button disabled={!username || !password || Boolean(errors.password) || Boolean(errors.username)} type='submit' className='login-btn'>Login</button>
             </form>
-            {hasAttemptedLogin && (success ?(
+            {hasAttemptedLogin && (success ? (
                 <Message message="Login successful" />
-            ):<Message message="Invalid password or email" />)}
+            ) : <Message message="Invalid password or email" />)}
         </div>
     )
 }

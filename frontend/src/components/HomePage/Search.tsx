@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
-import './home.css'; // Assuming you have a CSS file for styling
+import './home.css'; 
+import { getSearchResults } from '../../APIs/Home/getSearchResults';
+import { useNavigate } from 'react-router-dom';
 
 function SearchBar() {
-  // Setup today and tomorrow
   const today = new Date();
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
 
   const formatDate = (date:Date) => date.toISOString().split('T')[0];
 
-  // State
   const [searchTerm, setSearchTerm] = useState('');
   const [checkIn, setCheckIn] = useState(formatDate(today));
   const [checkOut, setCheckOut] = useState(formatDate(tomorrow));
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [rooms, setRooms] = useState(1);
+  const navigate = useNavigate()
 
-  const handleSearch = () => {
-    // Your search logic (for now just log the data)
-    console.log({
-      searchTerm,
-      checkIn,
-      checkOut,
-      adults,
-      children,
-      rooms
-    });
+  const handleSearch = async() => {
+   const params = new URLSearchParams({
+    searchTerm,
+    checkIn, 
+    checkOut,
+    rooms :rooms.toString(),
+    adults: adults.toString(),
+    children: children.toString()
+   }).toString()
+
+   navigate(`/search-results?${params}`)
   };
 
   return (

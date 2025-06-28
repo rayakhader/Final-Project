@@ -1,7 +1,7 @@
 import React from 'react';
 
 type StarRatingProps = {
-  rating: number; // 0 to 5, can be float (e.g., 4.5)
+  rating: number;
 };
 
 const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
