@@ -5,6 +5,7 @@ import Login from './components/Auth/Login';
 import Home from './components/HomePage/Home';
 import Nav from './components/Nav/Nav';
 import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage';
+import Hotel from './components/Hotel/Hotel';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/search-results' element={<SearchResultsPage />} />
+        <Route path='/hotels/:id' element={<Hotel />} />
         <Route path='/login' element={<Login />} />
       </Routes>
       </Router>

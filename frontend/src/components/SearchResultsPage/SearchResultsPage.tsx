@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getSearchResults } from '../../APIs/SearchResults/getSearchResults';
 import { FaShoppingBag } from 'react-icons/fa';
 import './search.css'
@@ -29,6 +29,7 @@ function SearchResultsPage() {
         starRating: 0,
         roomType: ''
     })
+    const navigate = useNavigate()
     const fetchHotels = async () => {
         const searchTerm = searchParams.get('searchTerm') || '';
         const checkIn = searchParams.get('checkIn') || '';
@@ -44,6 +45,9 @@ function SearchResultsPage() {
     useEffect(() => {
         fetchHotels();
     }, [searchParams]);
+    function handleViewHotel(hotelId:number){
+        navigate(`/hotels/${hotelId}`)
+    }
 
     const filteredHotels = hotels.filter(hotel => {
         const matchesPrice = hotel.roomPrice >= filters.priceRange[0] && hotel.roomPrice <= filters.priceRange[1];
@@ -111,7 +115,7 @@ function SearchResultsPage() {
 
                 <main className="hotel-listings">
                     {filteredHotels.length > 0 ? filteredHotels.map((hotel, idx) => (
-                        <div className="hotel-card" key={idx}>
+                        <div onClick={()=>handleViewHotel(hotel.hotelId)}  className="hotel-card" key={idx}>
                             <img src={hotel.roomPhotoUrl} alt={hotel.hotelName} />
                             <h4>{hotel.hotelName}</h4>
                             <p>⭐ {hotel.starRating} stars</p>
