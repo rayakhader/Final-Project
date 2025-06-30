@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import './home.css'; 
-import { getSearchResults } from '../../APIs/SearchResults/getSearchResults';
 import { useNavigate } from 'react-router-dom';
 
 function SearchBar() {

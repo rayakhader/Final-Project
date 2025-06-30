@@ -6,6 +6,7 @@ import TrendingDestinations from './TrendingDestinations'
 import { getFeatureDeals } from '../../APIs/Home/getFeatureDeals'
 import { getRecentHotel } from '../../APIs/Home/getRecentHotel'
 import { getTrendingDest } from '../../APIs/Home/getTrendingDest'
+import './home.css'
 
 function Home() {
   const [featureDeals, setFeatureDeals] = useState([])

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getHotelById } from '../../APIs/Hotel/getHotelById'
 import './hotel.css'
+// import { MdShoppingBag } from 'react-icons/md';
+
 
 type Amenity = {
   name: string;
@@ -22,31 +24,31 @@ type HotelDetails = {
 };
 
 function Hotel() {
-    const {id} = useParams()
-    const [hotelDetails, setHotelDetails] = useState<HotelDetails>()
-    const [availableRooms,setAvailableRooms] = useState([])
-    useEffect(()=>{
-        if(id){
-            const fetchData = async()=>{
-           await getHotelById(parseInt(id))
-           .then((data)=>{
+  const { id } = useParams()
+  const [hotelDetails, setHotelDetails] = useState<HotelDetails>()
+  const [availableRooms, setAvailableRooms] = useState([])
+  const [checkIn, setCheckIn] = useState('')
+  const [checkOut, setCheckout] = useState('')
+  useEffect(() => {
+    if (id) {
+      const fetchData = async () => {
+        await getHotelById(parseInt(id))
+          .then((data) => {
             console.log(data)
             setHotelDetails(data)
-           })
-        }
-            fetchData()
-        }
-    },[id])
+          })
+      }
+      fetchData()
+    }
+  }, [id])
   return (
-     <div className="hotel-page">
-      {/* Top Bar */}
+    <div className="hotel-page">
       <header className="hotel-header">
         <button className="cart-button">
-          {/* <FaShoppingBag /> */}
+          {/* <MdShoppingBag /> */}
         </button>
       </header>
 
-      {/* Main Content */}
       <div className="hotel-content">
         <aside className="hotel-left">
           <section className="hotel-details">
@@ -58,8 +60,20 @@ function Hotel() {
 
           <section className="hotel-map">
             <h3>Location on Map</h3>
-            {/* You can embed Google Map or a static placeholder */}
-            <div className="map-placeholder">Map Here</div>
+            <div className="map-placeholder">
+              {hotelDetails && (
+                <iframe
+                  title="Hotel Location"
+                  className="map-frame"
+                  width="100%"
+                  height="250"
+                  frameBorder="0"
+                  style={{ border: 0 }}
+                  src={`https://www.google.com/maps?q=${hotelDetails.latitude},${hotelDetails.longitude}&z=15&output=embed`}
+                  allowFullScreen
+                ></iframe>
+              )}
+            </div>
           </section>
         </aside>
 
@@ -67,13 +81,21 @@ function Hotel() {
           <section className="hotel-gallery">
             <h3>4.2 Picture Gallery</h3>
             <div className="gallery-placeholder">
-                <img src={hotelDetails?.imageUrl} alt={hotelDetails?.hotelName} />
+              <img src={hotelDetails?.imageUrl} alt={hotelDetails?.hotelName} />
             </div>
           </section>
 
           <section className="hotel-rooms">
             <h3>4.2 List of Available Rooms</h3>
             <p>Available Rooms: {hotelDetails?.availableRooms}</p>
+            <div className='date'>
+              <label htmlFor="">
+              <input type="date" value={checkIn} onChange ={(e)=>setCheckIn(e.target.value)}name="checkIn" id="checkIn" />
+              </label>
+              <label>
+                 <input type="date" value={checkOut} onChange ={(e)=>setCheckIn(e.target.value)} name="checkOut" id="checkOut" />
+              </label>
+            </div>
             <div className="rooms-placeholder">Rooms List Here</div>
           </section>
         </main>
