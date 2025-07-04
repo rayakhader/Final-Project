@@ -29,18 +29,12 @@ export function useLogin() {
   }
 
   function validatePassword(value: string) {
-    if (value.length < 8) {
-      setErrors(prev => ({ ...prev, password: 'Password must be at least 8 characters long' }));
+    if (value.length < 4) {
+      setErrors(prev => ({ ...prev, password: 'Password must be at least 4 characters long' }));
     } else if (value.length > 20) {
       setErrors(prev => ({ ...prev, password: 'Password must be less than 20 characters long' }));
-    } else if (!/[A-Z]/.test(value)) {
-      setErrors(prev => ({ ...prev, password: 'Password must contain at least one uppercase letter' }));
     } else if (!/[a-z]/.test(value)) {
       setErrors(prev => ({ ...prev, password: 'Password must contain at least one lowercase letter' }));
-    } else if (!/[0-9]/.test(value)) {
-      setErrors(prev => ({ ...prev, password: 'Password must contain at least one number' }));
-    } else if (!/[!@#$%^&*]/.test(value)) {
-      setErrors(prev => ({ ...prev, password: 'Password must contain at least one special character' }));
     } else {
       setErrors(prev => ({ ...prev, password: '' }));
     }
