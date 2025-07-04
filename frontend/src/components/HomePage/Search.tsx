@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './home.css'; 
-import { getSearchResults } from '../../APIs/SearchResults/getSearchResults';
 import { useNavigate } from 'react-router-dom';
 
 function SearchBar() {
@@ -10,12 +9,13 @@ function SearchBar() {
 
   const formatDate = (date:Date) => date.toISOString().split('T')[0];
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [checkIn, setCheckIn] = useState(formatDate(today));
-  const [checkOut, setCheckOut] = useState(formatDate(tomorrow));
-  const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(0);
-  const [rooms, setRooms] = useState(1);
+  // State
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [checkIn, setCheckIn] = useState<string>(formatDate(today));
+  const [checkOut, setCheckOut] = useState<string>(formatDate(tomorrow));
+  const [adults, setAdults] = useState<number>(2);
+  const [children, setChildren] = useState<number>(0);
+  const [rooms, setRooms] = useState<number>(1);
   const navigate = useNavigate()
 
   const handleSearch = async() => {

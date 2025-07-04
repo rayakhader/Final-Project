@@ -1,16 +1,7 @@
 import React from 'react';
+import { DestinationData } from './types';
 
-type Destination = {
-  cityId: number,
-  cityName: string,
-  countryName: string,
-  description: number,
-  thumbnailUrl: string,
-}
-
-function TrendingDestinations({list}:{list:Destination[]}) {
-   
-
+function TrendingDestinations({list}:{list:DestinationData[]}) {
   return (
     <div>
       <h2>Trending Destination Highlights</h2>
