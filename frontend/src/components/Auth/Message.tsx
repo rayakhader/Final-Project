@@ -1,7 +1,10 @@
-import React from 'react'
 
-function Message({ message }: { message: string }) {
-    const messageStyle = message === 'Login successful' ? 'login-success' : 'login-failure';
+function Message({ status }: { status: string }) {
+    if(status === "idle"){
+        return null;
+    }
+    const message = status==="success" ? "Login successful" : "Invalid password or email";
+    const messageStyle = status==="success" ? "login-success" : "login-failure"
     return (
         <div className={`msg ${messageStyle}`}>
             {message}
