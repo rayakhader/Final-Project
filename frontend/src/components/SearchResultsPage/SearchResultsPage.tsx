@@ -3,33 +3,15 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getSearchResults } from '../../APIs/SearchResults/getSearchResults';
 import { FaShoppingBag } from 'react-icons/fa';
 import './search.css'
-type Amenity = {
-    id: number,
-    name: string,
-    description: string
-}
-type Hotel = {
-    hotelId: number,
-    hotelName: string,
-    starRating: number,
-    latitude: number,
-    longitude: number,
-    roomPrice: number,
-    roomType: string,
-    cityName: string,
-    roomPhotoUrl: string,
-    discount: number,
-    amenities: Amenity[]
-}
+import { SearchResultHotelData } from '../HomePage/types';
+import { useSearchFilters } from '../../hooks/useSearchFilters';
+
 function SearchResultsPage() {
     const [searchParams] = useSearchParams()
-    const [hotels, setHotels] = useState<Hotel[]>([])
-    const [filters, setFilters] = useState({
-        priceRange: [0, 500],
-        starRating: 0,
-        roomType: ''
-    })
+    const [hotels, setHotels] = useState<SearchResultHotelData[]>([])
+    const { filters, setFilters, filteredHotels } = useSearchFilters(hotels)
     const navigate = useNavigate()
+
     const fetchHotels = async () => {
         const searchTerm = searchParams.get('searchTerm') || '';
         const checkIn = searchParams.get('checkIn') || '';
@@ -45,16 +27,11 @@ function SearchResultsPage() {
     useEffect(() => {
         fetchHotels();
     }, [searchParams]);
-    function handleViewHotel(hotelId:number){
+
+    function handleViewHotel(hotelId: number) {
         navigate(`/hotels/${hotelId}`)
     }
 
-    const filteredHotels = hotels.filter(hotel => {
-        const matchesPrice = hotel.roomPrice >= filters.priceRange[0] && hotel.roomPrice <= filters.priceRange[1];
-        const matchesStar = filters.starRating ? hotel.starRating >= filters.starRating : true;
-        const matchesRoomType = filters.roomType ? hotel.roomType === filters.roomType : true;
-        return matchesPrice && matchesStar && matchesRoomType;
-    });
     return (
         <>
             <div className='search-header'>
@@ -115,7 +92,7 @@ function SearchResultsPage() {
 
                 <main className="hotel-listings">
                     {filteredHotels.length > 0 ? filteredHotels.map((hotel, idx) => (
-                        <div onClick={()=>handleViewHotel(hotel.hotelId)}  className="hotel-card" key={idx}>
+                        <div onClick={() => handleViewHotel(hotel.hotelId)} className="hotel-card" key={idx}>
                             <img src={hotel.roomPhotoUrl} alt={hotel.hotelName} />
                             <h4>{hotel.hotelName}</h4>
                             <p>⭐ {hotel.starRating} stars</p>

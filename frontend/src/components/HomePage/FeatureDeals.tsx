@@ -1,19 +1,7 @@
 import StarRating from './StarRating';
+import { FeatureDealData } from './types';
 
-type Hotel = {
-  hotelId: number,
-  originalRoomPrice: number,
-  discount: number,
-  finalPrice: number,
-  cityName: string,
-  hotelName: string,
-  hotelStarRating: number,
-  title: string,
-  description: string,
-  roomPhotoUrl: string
-}
-
-function FeatureDeals({ list }: { list: Hotel[] }) {
+function FeatureDeals({ list }: { list: FeatureDealData[] }) {
   return (
     <div>
       <h2>Feature Deals</h2>

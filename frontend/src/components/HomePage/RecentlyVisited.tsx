@@ -1,18 +1,8 @@
 import React from 'react'
-type Hotel = {
-  hotelId: number,
-  cityName: string,
-  hotelName: string,
-  starRating: number,
-  thumbnailUrl: string,
-  priceLowerBound :number,
-  priceUpperBound:number,
-  visitDate: Date
-}
+import { RecentlyVisitedHotelData } from './types';
 
-function RecentlyVisited({list}:{list:Hotel []}) {
- 
 
+function RecentlyVisited({list}:{list:RecentlyVisitedHotelData []}) {
   const renderStars = (rating:number) => (
     <>
       {Array(rating).fill(0).map((_, i) => (
