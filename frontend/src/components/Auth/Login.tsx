@@ -1,12 +1,13 @@
 import { useLogin } from '../../hooks/useLogin'
 import './login.css'
+import Message from './Message'
 
 function Login() {
     const { 
         username,
         password,
         errors,
-        success,
+        status,
         setUsername,
         setPassword,
         handleSubmit } = useLogin()
@@ -24,17 +25,8 @@ function Login() {
                 {errors.password && <p className='error'>{errors.password}</p>}
                 <button disabled={!username || !password || Boolean(errors.password) || Boolean(errors.username)} type='submit' className='login-btn'>Login</button>
             </form>
-            {success && (
-                <div className="msg login-success">
-                    Login successful
-                </div>
-            )}
-            {
-                !success &&
-                <div className="msg login-failed">
-                    Invalid username or password
-                </div>
-            }
+
+            <Message status={status} />
         </div>
     )
 }

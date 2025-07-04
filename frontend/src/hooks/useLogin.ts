@@ -6,12 +6,14 @@ type Errors = {
   username: string;
   password: string;
 };
+type Status = "idle" | "success" | "error"
+
 
 export function useLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<Errors>({ username: '', password: '' });
-  const [success, setSuccess] = useState(false);
+  const [status, setStatus] = useState<Status>("idle")
   const navigate = useNavigate();
 
   function validateUsername(value: string) {
@@ -27,18 +29,12 @@ export function useLogin() {
   }
 
   function validatePassword(value: string) {
-    if (value.length < 8) {
-      setErrors(prev => ({ ...prev, password: 'Password must be at least 8 characters long' }));
+    if (value.length < 4) {
+      setErrors(prev => ({ ...prev, password: 'Password must be at least 4 characters long' }));
     } else if (value.length > 20) {
       setErrors(prev => ({ ...prev, password: 'Password must be less than 20 characters long' }));
-    } else if (!/[A-Z]/.test(value)) {
-      setErrors(prev => ({ ...prev, password: 'Password must contain at least one uppercase letter' }));
     } else if (!/[a-z]/.test(value)) {
       setErrors(prev => ({ ...prev, password: 'Password must contain at least one lowercase letter' }));
-    } else if (!/[0-9]/.test(value)) {
-      setErrors(prev => ({ ...prev, password: 'Password must contain at least one number' }));
-    } else if (!/[!@#$%^&*]/.test(value)) {
-      setErrors(prev => ({ ...prev, password: 'Password must contain at least one special character' }));
     } else {
       setErrors(prev => ({ ...prev, password: '' }));
     }
@@ -58,11 +54,11 @@ export function useLogin() {
       const data = await LoginAPI(username, password);
       localStorage.setItem('token', data.authentication);
       localStorage.setItem('userType', data.userType);
-      setSuccess(true);
+      setStatus('success');
       setTimeout(() => navigate('/'), 1000);
     } catch (err) {
       console.error('Login error:', err);
-      setSuccess(false);
+      setStatus('error');
     }
   }
 
@@ -70,7 +66,7 @@ export function useLogin() {
     username,
     password,
     errors,
-    success,
+    status,
     setUsername,
     setPassword,
     handleSubmit

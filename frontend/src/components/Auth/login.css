@@ -86,7 +86,7 @@ input:focus {
     color: #155724;
 }
 
-.login-failed {
+.login-failure {
     color: #721c24;
 }
 
