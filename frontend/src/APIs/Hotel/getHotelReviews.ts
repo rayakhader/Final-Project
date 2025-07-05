@@ -1,6 +1,6 @@
-export const getAvailableRoomsByHotelId = async(id:number,checkInDate:string, checkOutDate:string)=>{
+export const getHotelReviews = async(id:number)=>{
      try {
-        const response = await fetch(`https://hotel.foothilltech.net/api/hotels/${id}/available-rooms?checkInDate=${checkInDate}&CheckOutDate=${checkOutDate}
+        const response = await fetch(`https://hotel.foothilltech.net/api/hotels/${id}/reviews
 `, {
             method: 'GET',
             headers: {
