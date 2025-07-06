@@ -106,7 +106,6 @@ function Hotel() {
                         <span key={idx} className="amenity-chip">{amenity.name}</span>
                       ))}
                     </div>
-                    <p>{String(cartItems.includes(room.roomId))}</p>
                     <button disabled={cartItems.includes(room.roomId)} className="add-to-cart-btn" onClick={()=>handleAddToCart(room.roomId)}>Add to cart</button>
                   </div>
                 </div>

@@ -34,6 +34,7 @@ body {
 
 .cart-button:hover {
   background: var(--background);
+  color: white;
 }
 
 .cart-items {
@@ -299,7 +300,7 @@ body {
 }
 
 .date-picker button:disabled,
-.add-to-cart-btn {
+.add-to-cart-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }

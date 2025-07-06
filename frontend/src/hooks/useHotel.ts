@@ -4,6 +4,7 @@ import { AvailableRoom, HotelDetails, Review } from "../components/Hotel/types"
 import { getAvailableRoomsByHotelId } from "../APIs/Hotel/getAvailableRoomsByHotelId"
 import { getHotelById } from "../APIs/Hotel/getHotelById"
 import { getHotelReviews } from "../APIs/Hotel/getHotelReviews"
+import { getCartItemsFromStorage, saveCartItemsToStorage } from "../utils/cartStorage"
 
 export function useHotel() {
     const { id } = useParams()
@@ -14,7 +15,7 @@ export function useHotel() {
     const [fullscreen, setFullscreen] = useState(false)
     const [reviews, setReviews] = useState<Review[]>([])
     const [loading, setLoading] = useState(true)
-    const [cartItems, setCartItems] = useState<number[]>([])
+    const [cartItems, setCartItems] = useState<number[]>(()=>getCartItemsFromStorage())
     const [validationError, setValidationError] = useState<string | null>('')
 
     async function handleFetchAvailableRoom() {
@@ -23,10 +24,9 @@ export function useHotel() {
         }
     }
     function handleAddToCart(id: number) {
-        const oldItems = JSON.parse(localStorage.getItem('cartItems') || '[]') as number[];
-        const updatedItems = [...oldItems, id]
-        localStorage.setItem('cartItems', JSON.stringify(updatedItems))
+        const updatedItems = [...cartItems, id]
         setCartItems(updatedItems)
+        saveCartItemsToStorage(updatedItems)
     }
     useEffect(() => {
         if (id) {
