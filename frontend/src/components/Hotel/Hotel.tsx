@@ -2,7 +2,6 @@ import './hotel.css'
 import LoadingSpinner from '../LoadingSpinner';
 import { useHotel } from '../../hooks/useHotel';
 import { MdShoppingBag } from 'react-icons/md';
-import { error } from 'console';
 
 
 function Hotel() {
@@ -19,7 +18,9 @@ function Hotel() {
     setCheckOut,
     setFullscreen,
     handleFetchAvailableRoom,
-    handleAddToCart } = useHotel()
+    handleAddToCart,
+    handleOpenCart } = useHotel()
+
 
   const ShoppingCartIcon = MdShoppingBag as unknown as React.FC;
 
@@ -28,7 +29,7 @@ function Hotel() {
   return (
     <div className="hotel-page">
       <header className="hotel-header">
-        <button className="cart-button">
+        <button className="cart-button" onClick={handleOpenCart}>
           <ShoppingCartIcon />
           <span className='cart-items'>{cartItems.length}</span>
         </button>
@@ -106,7 +107,7 @@ function Hotel() {
                         <span key={idx} className="amenity-chip">{amenity.name}</span>
                       ))}
                     </div>
-                    <button disabled={cartItems.includes(room.roomId)} className="add-to-cart-btn" onClick={()=>handleAddToCart(room.roomId)}>Add to cart</button>
+                    <button disabled={cartItems.includes(room.roomId)} className="add-to-cart-btn" onClick={() => handleAddToCart(room.roomId)}>Add to cart</button>
                   </div>
                 </div>
               ))}
