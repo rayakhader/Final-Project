@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './home.css'; // Assuming you have a CSS file for styling
+import './home.css'; 
+import { useNavigate } from 'react-router-dom';
 
 function SearchBar() {
-  // Setup today and tomorrow
   const today = new Date();
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
@@ -16,17 +16,19 @@ function SearchBar() {
   const [adults, setAdults] = useState<number>(2);
   const [children, setChildren] = useState<number>(0);
   const [rooms, setRooms] = useState<number>(1);
+  const navigate = useNavigate()
 
-  const handleSearch = () => {
-    // Your search logic (for now just log the data)
-    console.log({
-      searchTerm,
-      checkIn,
-      checkOut,
-      adults,
-      children,
-      rooms
-    });
+  const handleSearch = async() => {
+   const params = new URLSearchParams({
+    searchTerm,
+    checkIn, 
+    checkOut,
+    rooms :rooms.toString(),
+    adults: adults.toString(),
+    children: children.toString()
+   }).toString()
+
+   navigate(`/search-results?${params}`)
   };
 
   return (
