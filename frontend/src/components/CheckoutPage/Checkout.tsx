@@ -1,87 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { getCartItemsFromStorage } from '../../utils/cartStorage';
-import { getRoomById } from '../../APIs/Room/getRoomById';
-import { Room } from './types';
+import { useCheckout } from '../../hooks/useCheckout';
 import './checkout.css';
-import { useParams } from 'react-router-dom';
-import { getHotelById } from '../../APIs/Hotel/getHotelById';
-import { HotelDetails } from '../Hotel/types';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+
 
 function Checkout() {
-  const { id } = useParams();
-  const items = getCartItemsFromStorage();
-  const [hotel, setHotel] = useState<HotelDetails>();
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (items.length > 0) {
-      const fetchRooms = async () => {
-        const promises = items.map((id) => getRoomById(id));
-        const data = await Promise.all(promises);
-        setRooms(data);
-      };
-      fetchRooms();
-    }
-  }, [items]);
-
-  useEffect(() => {
-    if (!id) return;
-    const fetchHotel = async () => {
-      const data = await getHotelById(parseInt(id));
-      setHotel(data);
-    };
-    fetchHotel();
-  }, [id]);
-
-  const formik = useFormik({
-    initialValues: {
-      fullName: '',
-      email: '',
-      phone: '',
-      paymentMethod: 'credit_card',
-      specialRequests: ''
-    },
-    validationSchema: Yup.object({
-      fullName: Yup.string().required('Full name is required'),
-      email: Yup.string().email('Invalid email').required('Email is required'),
-      phone: Yup.string().required('Phone is required'),
-      paymentMethod: Yup.string().required('Payment method is required')
-    }),
-    onSubmit: (values) => {
-      if (!selectedRoomId) {
-        alert('Please select a room.');
-        return;
-      }
-      console.log({
-        ...values,
-        selectedRoomId
-      });
-      alert('Booking submitted!');
-    }
-  });
+  const { rooms, formik, selectedRoomId, setSelectedRoomId } = useCheckout();
 
   return (
     <div className="checkout-page">
-      <h1>Secure Checkout</h1>
+      <h1>Checkout - Book Your Room</h1>
 
       <section className="checkout-section">
         <h2>1️⃣ Select Your Room</h2>
         <div className="rooms-summary">
           {rooms.map((room) => (
             <label key={room.roomId} className="room-summary-card">
-              <input
-                type="radio"
-                name="selectedRoom"
-                checked={selectedRoomId === room.roomId}
-                onChange={() => setSelectedRoomId(room.roomId)}
-              />
-              <img src={room.roomPhotoUrl} alt={room.roomType} className="room-image" />
-              <div>
-                <h3>{room.roomType} Room #{room.roomNumber}</h3>
-                <p>Price: ${room.price}</p>
+              <div className="room-radio">
+                <input
+                  type="radio"
+                  name="selectedRoom"
+                  checked={selectedRoomId === room.roomId}
+                  onChange={() => setSelectedRoomId(room.roomId)}
+                />
+              </div>
+
+              <div className="room-details">
+                <img src={room.roomPhotoUrl} alt={room.roomType} className="room-image" />
+                <div className="room-info">
+                  <h3>{room.roomType} Room #{room.roomNumber}</h3>
+                  <p className="price">Price: ${room.price}</p>
+                  <p>Adults: {room.capacityOfAdults} | Children: {room.capacityOfChildren}</p>
+                  <ul className="amenities">
+                    {room.roomAmenities.map((amenity, index) => (
+                      <li key={index}>
+                        <strong>{amenity.name}:</strong> {amenity.description}
+                      </li>
+                    ))}
+                  </ul>
+                  {!room.availability && (
+                    <span className="unavailable">Currently Unavailable</span>
+                  )}
+                </div>
               </div>
             </label>
           ))}
@@ -145,7 +103,12 @@ function Checkout() {
                 checked={formik.values.paymentMethod === 'credit_card'}
                 onChange={formik.handleChange}
               />
-              Credit Card
+              <img
+                src="/atm-card.png"
+                alt="PayPal"
+                width={50}
+                height={50}
+              />
             </label>
             <label className="payment-option">
               <input
@@ -155,7 +118,12 @@ function Checkout() {
                 checked={formik.values.paymentMethod === 'paypal'}
                 onChange={formik.handleChange}
               />
-              PayPal
+              <img
+                src="/paypal-logo.png"
+                alt="PayPal"
+                width={50}
+                height={50}
+              />
             </label>
           </div>
         </section>
@@ -171,7 +139,7 @@ function Checkout() {
           />
         </section>
 
-        <button type="submit" className="confirm-btn">
+        <button type="submit" className="confirm-btn" disabled={!selectedRoomId || !formik.values.fullName || !formik.values.email || !formik.values.phone || !formik.values.paymentMethod || Boolean(formik.errors.email) || Boolean(formik.errors.fullName) || Boolean(formik.errors.paymentMethod) || Boolean(formik.errors.phone) || Boolean(formik.errors.specialRequests)}>
           Confirm Booking
         </button>
       </form>
