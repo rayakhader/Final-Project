@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getSearchResults } from '../../APIs/SearchResults/getSearchResults';
 import { FaShoppingBag } from 'react-icons/fa';
 import './search.css'
 import { SearchResultHotelData } from '../HomePage/types';
 import { useSearchFilters } from '../../hooks/useSearchFilters';
+import LoadingSpinner from '../LoadingSpinner';
 
 function SearchResultsPage() {
     const [searchParams] = useSearchParams()
     const [hotels, setHotels] = useState<SearchResultHotelData[]>([])
-    const {filters, setFilters, filteredHotels} =useSearchFilters(hotels)
-    
+    const { filters, setFilters, filteredHotels } = useSearchFilters(hotels)
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(true)
+
     const fetchHotels = async () => {
         const searchTerm = searchParams.get('searchTerm') || '';
         const checkIn = searchParams.get('checkIn') || '';
@@ -24,8 +27,15 @@ function SearchResultsPage() {
     };
 
     useEffect(() => {
-        fetchHotels();
+        fetchHotels().finally(() => {
+            setLoading(false)
+        })
     }, [searchParams]);
+
+    function handleViewHotel(hotelId: number) {
+        navigate(`/hotels/${hotelId}`)
+    }
+
     return (
         <>
             <div className='search-header'>
@@ -85,27 +95,29 @@ function SearchResultsPage() {
                 </aside>
 
                 <main className="hotel-listings">
-                    {filteredHotels.length > 0 ? filteredHotels.map((hotel, idx) => (
-                        <div className="hotel-card" key={idx}>
-                            <img src={hotel.roomPhotoUrl} alt={hotel.hotelName} />
-                            <h4>{hotel.hotelName}</h4>
-                            <p>⭐ {hotel.starRating} stars</p>
-                            <p>${hotel.roomPrice} per night</p>
-                            <div className="amenities">
-                                {hotel.amenities.map((h) => (
-                                    <span className="amenity" key={h.id}>{h.name}</span>
-                                ))}
+                    {loading ?
+                        <LoadingSpinner />
+                        : filteredHotels.length > 0 ? filteredHotels.map((hotel, idx) => (
+                            <div onClick={() => handleViewHotel(hotel.hotelId)} className="hotel-card" key={idx}>
+                                <img src={hotel.roomPhotoUrl} alt={hotel.hotelName} />
+                                <h4>{hotel.hotelName}</h4>
+                                <p>⭐ {hotel.starRating} stars</p>
+                                <p>${hotel.roomPrice} per night</p>
+                                <div className="amenities">
+                                    {hotel.amenities.map((h) => (
+                                        <span className="amenity" key={h.id}>{h.name}</span>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    )) : <div className="no-results">
-                        <img
-                            src="https://cdn-icons-png.flaticon.com/512/2748/2748558.png"
-                            alt="No results"
-                            className="no-results-image"
-                        />
-                        <h4>No results found</h4>
-                        <p>Try adjusting your filters or search criteria.</p>
-                    </div>}
+                        )) : <div className="no-results">
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/512/2748/2748558.png"
+                                alt="No results"
+                                className="no-results-image"
+                            />
+                            <h4>No results found</h4>
+                            <p>Try adjusting your filters or search criteria.</p>
+                        </div>}
                 </main>
             </div>
         </>

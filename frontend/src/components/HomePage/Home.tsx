@@ -6,7 +6,9 @@ import TrendingDestinations from './TrendingDestinations'
 import { getFeatureDeals } from '../../APIs/Home/getFeatureDeals'
 import { getRecentHotel } from '../../APIs/Home/getRecentHotel'
 import { getTrendingDest } from '../../APIs/Home/getTrendingDest'
+import './home.css'
 import { DestinationData, FeatureDealData, RecentlyVisitedHotelData } from './types'
+import LoadingSpinner from '../LoadingSpinner'
 
 function Home() {
   const [featureDeals, setFeatureDeals] = useState<FeatureDealData []>([])
@@ -35,9 +37,7 @@ function Home() {
   return (
     <div>
       {loading ?
-        <div className="spinner-container">
-          <div className="spinner"></div>
-        </div>
+        <LoadingSpinner />
         : <>
           <Search />
           <FeatureDeals list={featureDeals} />
