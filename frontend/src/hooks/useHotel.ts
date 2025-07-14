@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { AvailableRoom, HotelDetails, Review } from "../components/Hotel/types"
 import { getAvailableRoomsByHotelId } from "../APIs/Hotel/getAvailableRoomsByHotelId"
 import { getHotelById } from "../APIs/Hotel/getHotelById"
@@ -17,6 +17,7 @@ export function useHotel() {
     const [loading, setLoading] = useState(true)
     const [cartItems, setCartItems] = useState<number[]>(() => getCartItemsFromStorage())
     const [validationError, setValidationError] = useState<string | null>('')
+    const navigate = useNavigate()
     const isAvailabilityCheckDisabled = !checkIn || !checkOut || Boolean(validationError)
 
     const isRoomInCart = (id: number) => {
@@ -42,6 +43,9 @@ export function useHotel() {
         const updatedItems = [...cartItems, id]
         setCartItems(updatedItems)
         saveCartItemsToStorage(updatedItems)
+    }
+    function handleOpenCart() {
+        navigate(`/hotels/${id}/checkout`)
     }
     useEffect(() => {
         if (id) {
@@ -101,6 +105,7 @@ export function useHotel() {
         onToggleFullScreen: handleToggleFullScreen,
         handleFetchAvailableRoom,
         handleAddToCart,
+        handleOpenCart,
         isAvailabilityCheckDisabled,
         isRoomInCart
     }

@@ -20,6 +20,7 @@ function Hotel() {
     onToggleFullScreen,
     handleFetchAvailableRoom,
     handleAddToCart,
+    handleOpenCart,
     isAvailabilityCheckDisabled,
     isRoomInCart } = useHotel()
     
@@ -28,7 +29,7 @@ function Hotel() {
   return (
     <div className="hotel-page">
       <header className="hotel-header">
-        <button className="cart-button">
+        <button className="cart-button" onClick={handleOpenCart}>
           {MdShoppingBag({ size: 24 }) as JSX.Element}
           <span className='cart-items'>{cartItems.length}</span>
         </button>
