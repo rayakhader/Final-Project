@@ -15,12 +15,28 @@ export function useHotel() {
     const [fullscreen, setFullscreen] = useState(false)
     const [reviews, setReviews] = useState<Review[]>([])
     const [loading, setLoading] = useState(true)
-    const [cartItems, setCartItems] = useState<number[]>(()=>getCartItemsFromStorage())
+    const [cartItems, setCartItems] = useState<number[]>(() => getCartItemsFromStorage())
     const [validationError, setValidationError] = useState<string | null>('')
     const navigate = useNavigate()
-    async function handleFetchAvailableRoom() {
+    const isAvailabilityCheckDisabled = !checkIn || !checkOut || Boolean(validationError)
+
+    const isRoomInCart = (id: number) => {
+        return cartItems.includes(id)
+    }
+
+    function handleToggleFullScreen() {
+        setFullscreen(!fullscreen)
+    }
+    function handleChangeCheckIn(e: React.ChangeEvent<HTMLInputElement>) {
+        setCheckIn(e.target.value)
+    }
+    function handleChangeCheckOut(e: React.ChangeEvent<HTMLInputElement>) {
+        setCheckOut(e.target.value)
+    }
+
+    function handleFetchAvailableRoom() {
         if (id) {
-            await getAvailableRoomsByHotelId(parseInt(id), checkIn, checkOut).then((data) => setAvailableRooms(data))
+            getAvailableRoomsByHotelId(parseInt(id), checkIn, checkOut).then((data) => setAvailableRooms(data))
         }
     }
     function handleAddToCart(id: number) {
@@ -28,7 +44,7 @@ export function useHotel() {
         setCartItems(updatedItems)
         saveCartItemsToStorage(updatedItems)
     }
-    function handleOpenCart(){
+    function handleOpenCart() {
         navigate(`/hotels/${id}/checkout`)
     }
     useEffect(() => {
@@ -49,7 +65,7 @@ export function useHotel() {
     }, [id])
 
     useEffect(() => {
-        if(!checkIn || !checkOut){
+        if (!checkIn || !checkOut) {
             setValidationError(null)
             return
         }
@@ -59,15 +75,15 @@ export function useHotel() {
         const checkInDate = new Date(checkIn);
         const checkOutDate = new Date(checkOut);
 
-        if(checkInDate< today){
+        if (checkInDate < today) {
             setValidationError('Check-in date cannot be in the past.')
             return
         }
-        if(checkOutDate < today){
+        if (checkOutDate < today) {
             setValidationError('Check-out date cannot be in the past.')
             return
         }
-        if( checkInDate >= checkOutDate){
+        if (checkInDate >= checkOutDate) {
             setValidationError('Check-in date must be before check-out date.')
             return
         }
@@ -84,12 +100,14 @@ export function useHotel() {
         loading,
         cartItems,
         validationError,
-        setCheckIn,
-        setCheckOut,
-        setFullscreen,
+        onChangeCheckIn: handleChangeCheckIn,
+        onChangeCheckOut: handleChangeCheckOut,
+        onToggleFullScreen: handleToggleFullScreen,
         handleFetchAvailableRoom,
         handleAddToCart,
-        handleOpenCart
+        handleOpenCart,
+        isAvailabilityCheckDisabled,
+        isRoomInCart
     }
 
 

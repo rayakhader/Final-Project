@@ -2,6 +2,7 @@ import './hotel.css'
 import LoadingSpinner from '../LoadingSpinner';
 import { useHotel } from '../../hooks/useHotel';
 import { MdShoppingBag } from 'react-icons/md';
+import { JSX } from 'react';
 
 
 function Hotel() {
@@ -14,23 +15,22 @@ function Hotel() {
     loading,
     cartItems,
     validationError,
-    setCheckIn,
-    setCheckOut,
-    setFullscreen,
+    onChangeCheckIn,
+    onChangeCheckOut,
+    onToggleFullScreen,
     handleFetchAvailableRoom,
     handleAddToCart,
-    handleOpenCart } = useHotel()
-
-
-  const ShoppingCartIcon = MdShoppingBag as unknown as React.FC;
-
+    handleOpenCart,
+    isAvailabilityCheckDisabled,
+    isRoomInCart } = useHotel()
+    
   if (loading) return <LoadingSpinner />
 
   return (
     <div className="hotel-page">
       <header className="hotel-header">
         <button className="cart-button" onClick={handleOpenCart}>
-          <ShoppingCartIcon />
+          {MdShoppingBag({ size: 24 }) as JSX.Element}
           <span className='cart-items'>{cartItems.length}</span>
         </button>
       </header>
@@ -65,7 +65,7 @@ function Hotel() {
         <main className="hotel-right">
           <section className="hotel-gallery">
             <h3>Picture Gallery</h3>
-            <div className={`gallery-placeholder ${fullscreen ? 'fullscreen' : ''}`} onClick={() => setFullscreen(!fullscreen)}>
+            <div className={`gallery-placeholder ${fullscreen ? 'fullscreen' : ''}`} onClick={onToggleFullScreen}>
               <img src="https://cf.bstatic.com/xdata/images/hotel/max1280x900/33143786.jpg?k=4d0bca9d9795b80beb2cd9786946e043b23d1372eb633d5855d3aba6343d68d4&o=&hp=1" alt={hotelDetails?.hotelName} />
               <span className="fullscreen-hint">{fullscreen ? 'Exit fullscreen' : 'Click to view fullscreen'}</span>
             </div>
@@ -77,13 +77,13 @@ function Hotel() {
             <div className='date-picker'>
               <label>
                 <span>Check-in</span>
-                <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} name="checkIn" id="checkIn" />
+                <input type="date" value={checkIn} onChange={onChangeCheckIn} name="checkIn" id="checkIn" />
               </label>
               <label>
                 <span>Check-out</span>
-                <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} name="checkOut" id="checkOut" />
+                <input type="date" value={checkOut} onChange={onChangeCheckOut} name="checkOut" id="checkOut" />
               </label>
-              <button disabled={!checkIn || !checkOut || Boolean(validationError)} onClick={handleFetchAvailableRoom}>
+              <button disabled={isAvailabilityCheckDisabled} onClick={handleFetchAvailableRoom}>
                 Check Availability
               </button>
             </div>
@@ -93,8 +93,11 @@ function Hotel() {
               {availableRooms.length === 0 && (
                 <p>No available rooms for the selected dates.</p>
               )}
-              {availableRooms.map((room) => (
-                <div key={room.roomId} className="room-card">
+              {availableRooms.map((room) => {
+                function handleAddRoomToCart() {
+                  handleAddToCart(room.roomId);
+                }
+                return (<div key={room.roomId} className="room-card">
                   <img src={room.roomPhotoUrl} alt={`Room ${room.roomNumber}`} className="room-image" />
 
                   <div className="room-info">
@@ -107,10 +110,11 @@ function Hotel() {
                         <span key={idx} className="amenity-chip">{amenity.name}</span>
                       ))}
                     </div>
-                    <button disabled={cartItems.includes(room.roomId)} className="add-to-cart-btn" onClick={() => handleAddToCart(room.roomId)}>Add to cart</button>
+                    <button disabled={isRoomInCart(room.roomId)} className="add-to-cart-btn" onClick={handleAddRoomToCart}>Add to cart</button>
                   </div>
                 </div>
-              ))}
+                )
+              })}
             </div>
           </section>
           <section className="hotel-reviews">
