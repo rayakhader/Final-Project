@@ -4,10 +4,7 @@
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
@@ -31,12 +28,15 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:storybook/recommended"
     ]
   },
   "browserslist": {
@@ -52,7 +52,18 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-docs": "^9.0.16",
+    "@storybook/addon-onboarding": "^9.0.16",
+    "@storybook/preset-create-react-app": "^9.0.16",
+    "@storybook/react-webpack5": "^9.0.16",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/jest": "^30.0.0",
     "@types/react-star-ratings": "^2.3.3",
-    "@types/yup": "^0.29.14"
+    "@types/yup": "^0.29.14",
+    "eslint-plugin-storybook": "^9.0.16",
+    "prop-types": "^15.8.1",
+    "storybook": "^9.0.16",
+    "webpack": "^5.100.1"
   }
 }
