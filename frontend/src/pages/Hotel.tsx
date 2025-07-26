@@ -29,7 +29,7 @@ function Hotel() {
   return (
     <div className="hotel-page">
       <header className="hotel-header">
-        <button className="cart-button" onClick={handleOpenCart}>
+        <button className="cart-button" onClick={handleOpenCart} disabled={cartItems.length===0}>
           {MdShoppingBag({ size: 24 }) as JSX.Element}
           <span className='cart-items'>{cartItems.length}</span>
         </button>

@@ -46,7 +46,9 @@ export function useHotel() {
         saveCartItemsToStorage(updatedItems)
     }
     function handleOpenCart() {
-        navigate(`/hotels/${id}/checkout`)
+        if (cartItems.length > 0) {
+            navigate(`/hotels/${id}/checkout`)
+        }
     }
     useEffect(() => {
         if (id) {
