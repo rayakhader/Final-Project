@@ -1,5 +1,5 @@
 import React from 'react'
-import { AddDialogProps } from './types/addDialog'
+import { AddDialogProps } from '../types/types'
 
 
 const AddDialog: React.FC<AddDialogProps> = ({ title, isOpen, onClose, children }) => {

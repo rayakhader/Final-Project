@@ -1,11 +1,12 @@
 import DataTable from '../components/DataTable'
 import { useCities } from '../features/adminPanel/hooks/useCities'
-import AddDialog from '../components/AddDialog'
+import AddDialog from '../features/adminPanel/components/AddDialog'
 import CityForm from '../features/adminPanel/components/CityForm'
 import { Toaster } from 'react-hot-toast'
+import ConfirmDialog from '../features/adminPanel/components/ConfirmDeleteDialog'
 
 function Cities() {
-  const { cities, handleAddDialogOpen, isAddDialogOpen,handleCloseDialog, fetchCities } = useCities()
+  const { cities, handleAddDialogOpen, isAddDialogOpen,handleCloseDialog, fetchCities, isOpenConfirmDelete, handleOpenConfirmDelete, handleCloseConfirmDelete, handleDeleteCity,selectedCityId } = useCities()
   return (
     <div className='border-2 border-gray-400 p-2 rounded-xl shadow-xl'>
       <h1 className='font-start'>Manage Cities</h1>
@@ -22,7 +23,7 @@ function Cities() {
           { header: "Description", accessor: "description" },
         ]}
         onOpenEditDialog={(id) => console.log("Edit", id)}
-        onOpenConfirmDeleteDialog={(id) => console.log("Delete", id)}
+        onOpenConfirmDeleteDialog={(id) => handleOpenConfirmDelete(id)}
         isLoading={false}
       />
 
@@ -31,6 +32,10 @@ function Cities() {
         <AddDialog title="Add New City" isOpen={isAddDialogOpen} onClose={handleCloseDialog}>
           <CityForm onClose={handleCloseDialog} onRefetch={fetchCities} />
         </AddDialog>
+      }
+      {
+        isOpenConfirmDelete && Boolean(selectedCityId) && <ConfirmDialog open={isOpenConfirmDelete}  title='Confirm Delete City' description='Are you sure that you want to delete this city?' onClose={handleCloseConfirmDelete} onConfirm={()=>handleDeleteCity(selectedCityId)}/>
+
       }
 
       <Toaster position='bottom-right' />
