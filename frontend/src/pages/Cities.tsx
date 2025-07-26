@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
 import DataTable from '../components/DataTable'
-import { getCities } from '../features/adminPanel/services/getCities'
-import { City } from '../features/adminPanel/types/types'
+import { useCities } from '../features/adminPanel/hooks/useCities'
+import AddDialog from '../components/AddDialog'
+import CityForm from '../features/adminPanel/components/CityForm'
+import { Toaster } from 'react-hot-toast'
 
 function Cities() {
-  const [cities, setCities] = useState<City[]>([])
-  useEffect(() => {
-    getCities()
-      .then((data) => {
-        setCities(data)
-      })
-  }, [])
+  const { cities, handleAddDialogOpen, isAddDialogOpen,handleCloseDialog, fetchCities } = useCities()
   return (
     <div className='border-2 border-gray-400 p-2 rounded-xl shadow-xl'>
       <h1 className='font-start'>Manage Cities</h1>
+      <div className='flex justify-end px-2'>
+        <button onClick={handleAddDialogOpen} className='p-2 border-2 rounded-lg  text-white bg-[#0E1B6B] text-sm'>
+        + Add new City
+      </button>
+      </div>
       <DataTable
         data={cities}
         columns={[
@@ -26,6 +26,14 @@ function Cities() {
         isLoading={false}
       />
 
+      {
+        isAddDialogOpen &&
+        <AddDialog title="Add New City" isOpen={isAddDialogOpen} onClose={handleCloseDialog}>
+          <CityForm onClose={handleCloseDialog} onRefetch={fetchCities} />
+        </AddDialog>
+      }
+
+      <Toaster position='bottom-right' />
     </div>
   )
 }

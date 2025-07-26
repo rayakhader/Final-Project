@@ -8,10 +8,7 @@ export const getCities = async () => {
             },
         }
         )
-        console.log(localStorage.getItem('token'))
-        console.log(response)
         const data = await response.json();
-        console.log(data)
         return data
 
     } catch (error) {

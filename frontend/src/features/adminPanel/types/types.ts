@@ -7,3 +7,8 @@ export type City = {
 export type Hotel={
     
 }
+
+export interface CityFormProps {
+  onClose: () => void,
+  onRefetch : () => void
+}
