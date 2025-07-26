@@ -1,0 +1,260 @@
+.checkout-page {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.checkout-section {
+  margin-bottom: 2.5rem;
+}
+
+.rooms-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  max-height: 800px;
+  overflow-y: auto;
+}
+.room-summary-card {
+  display: flex;
+  align-items: flex-start;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fafafa;
+  transition: border 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.room-summary-card:hover {
+  border-color: #0077cc;
+  box-shadow: 0 4px 12px rgba(0, 119, 204, 0.15);
+}
+
+.room-radio {
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.room-radio input {
+  transform: scale(1.5);
+}
+
+.room-details {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
+
+.room-image {
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.room-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.room-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.room-info .price {
+  font-weight: 600;
+  color: #0077cc;
+}
+
+.room-info .amenities {
+  margin: 0;
+  padding-left: 1.2rem;
+  list-style-type: disc;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.unavailable {
+  display: inline-block;
+  margin-top: 0.5rem;
+  background: #f44336;
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.checkout-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #333;
+}
+
+.checkout-form input,
+.checkout-form textarea {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border: 1.5px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus {
+  border-color: #0077cc;
+  box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.1);
+  outline: none;
+}
+
+textarea {
+  resize: none;
+  overflow-y: auto
+}
+
+.payment-methods {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 0.75rem;
+}
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;  
+  cursor: pointer;
+}
+
+.payment-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.payment-icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+
+.payment-option input[type="radio"] {
+  transform: scale(1.2);
+}
+
+.error {
+  color: #d32f2f;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.confirm-btn {
+  background: #0077cc;
+  color: #fff;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.confirm-btn:hover {
+  background: #005fa3;
+}
+
+.confirm-btn:active {
+  transform: scale(0.98);
+}
+.confirm-btn:disabled{
+  cursor: not-allowed;
+  background-color:#b0acac;
+}
+
+.confirmation-page {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem 3rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fafafa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.confirmation-page h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.confirmation-page h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #2c3e50;
+  display: inline-block;
+  padding-bottom: 0.2rem;
+}
+
+.confirmation-page p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.confirmation-actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.confirmation-actions button {
+  background-color: #2c3e50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin: 0 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.confirmation-actions button:hover {
+  background-color: #34495e;
+}
+
+@media print {
+  .confirmation-actions {
+    display: none;
+  }
+}
