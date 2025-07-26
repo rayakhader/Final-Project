@@ -11,6 +11,14 @@ import { getRoomById } from '../services/getRoomById';
 import { getHotelById } from '../../hotel/services/getHotelById';
 
 
+const initialFormValues = {
+    fullName: '',
+    email: '',
+    phone: '',
+    paymentMethod: 'credit_card',
+    specialRequests: '',
+};
+
 export function useCheckout() {
     const { hotelId } = useParams();
     const navigate = useNavigate();
@@ -21,13 +29,7 @@ export function useCheckout() {
     const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
 
     const formik = useFormik({
-        initialValues: {
-            fullName: '',
-            email: '',
-            phone: '',
-            paymentMethod: 'credit_card',
-            specialRequests: ''
-        },
+        initialValues: initialFormValues,
         validationSchema: Yup.object({
             fullName: Yup.string()
                 .matches(/^[a-zA-Z\s]+$/, 'Full name can only contain letters and spaces')
@@ -73,6 +75,9 @@ export function useCheckout() {
             });
         },
     });
+    function handleChangeRoomId(e: React.ChangeEvent<HTMLInputElement>) {
+        setSelectedRoomId(Number(e.target.value))
+    }
 
     useEffect(() => {
         document.title = "Secure Checkout - Book Your Room";
@@ -103,6 +108,6 @@ export function useCheckout() {
         hotel,
         formik,
         selectedRoomId,
-        setSelectedRoomId,
+        handleChangeRoomId,
     };
 }

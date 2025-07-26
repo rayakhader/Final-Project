@@ -3,7 +3,14 @@ import '../features/checkout/styles/checkout.css';
 
 
 function Checkout() {
-  const { rooms, formik, selectedRoomId, setSelectedRoomId } = useCheckout();
+  const { rooms, formik, selectedRoomId, handleChangeRoomId } = useCheckout();
+  const isFormInvalid =
+  !selectedRoomId ||
+  !formik.values.fullName ||
+  !formik.values.email ||
+  !formik.values.phone ||
+  !formik.values.paymentMethod ||
+  Object.keys(formik.errors).length > 0;
 
   return (
     <div className="checkout-page">
@@ -18,8 +25,9 @@ function Checkout() {
                 <input
                   type="radio"
                   name="selectedRoom"
+                  value={room.roomId}
                   checked={selectedRoomId === room.roomId}
-                  onChange={() => setSelectedRoomId(room.roomId)}
+                  onChange={handleChangeRoomId}
                 />
               </div>
 
@@ -139,7 +147,7 @@ function Checkout() {
           />
         </section>
 
-        <button type="submit" className="confirm-btn" disabled={!selectedRoomId || !formik.values.fullName || !formik.values.email || !formik.values.phone || !formik.values.paymentMethod || Boolean(formik.errors.email) || Boolean(formik.errors.fullName) || Boolean(formik.errors.paymentMethod) || Boolean(formik.errors.phone) || Boolean(formik.errors.specialRequests)}>
+        <button type="submit" className="confirm-btn" disabled={isFormInvalid}>
           Confirm Booking
         </button>
       </form>

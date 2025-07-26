@@ -17,7 +17,6 @@ export const submitBooking = async (customerName: string, hotelName: string, roo
         }
         )
         const data = await response.json();
-        console.log(data)
         return data
 
     } catch (error) {
