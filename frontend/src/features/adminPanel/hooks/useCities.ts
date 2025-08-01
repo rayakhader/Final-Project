@@ -1,25 +1,39 @@
 import { useEffect, useState } from "react"
-import { City } from "../types/types"
-import { getCities } from "../services/getCities"
-import { deleteCity } from "../services/deleteCity"
 import toast from "react-hot-toast"
+import { City } from "../types/cities.types"
+import { deleteCity, getCities } from "../services/cities"
 
 export const useCities = () => {
   const [cities, setCities] = useState<City[]>([])
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isOpenConfirmDelete, setIsOpenConfirmDelete] = useState(false)
-  const [selectedCityId, setSelectedCityId] = useState(0)
+  const [editCityId, setEditCityId] = useState<number>(0);
+  const [deleteCityId, setDeleteCityId] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true)
 
   function handleAddDialogOpen() {
     setIsAddDialogOpen(true)
   }
-  function handleCloseDialog() {
+  function handleEditDialogOpen(id: number) {
+    setIsEditDialogOpen(true)
+    setEditCityId(id)
+  }
+  function handleCloseAddDialog() {
     setIsAddDialogOpen(false)
   }
+  function handleCloseEditDialog() {
+    setIsEditDialogOpen(false)
+    setEditCityId(0)
+  }
+
   function fetchCities() {
+    setIsLoading(true)
     getCities()
       .then((data) => {
         setCities(data)
+      }).finally(() => {
+        setIsLoading(false)
       })
   }
   function handleDeleteCity(id: number) {
@@ -35,17 +49,17 @@ export const useCities = () => {
       });
 
   }
-  function handleOpenConfirmDelete(id:number) {
+  function handleOpenConfirmDelete(id: number) {
     setIsOpenConfirmDelete(true)
-    setSelectedCityId(id)
+    setDeleteCityId(id)
   }
-  function handleCloseConfirmDelete(){
+  function handleCloseConfirmDelete() {
     setIsOpenConfirmDelete(false)
-    setSelectedCityId(0)
+    setDeleteCityId(0)
   }
   useEffect(() => {
     fetchCities()
   }, [])
 
-  return { cities, handleAddDialogOpen, isAddDialogOpen, handleCloseDialog, fetchCities, handleDeleteCity, handleOpenConfirmDelete, isOpenConfirmDelete , selectedCityId, handleCloseConfirmDelete}
+  return { cities, handleAddDialogOpen, isAddDialogOpen, handleCloseAddDialog, fetchCities, handleDeleteCity, handleOpenConfirmDelete, isOpenConfirmDelete, deleteCityId, handleCloseConfirmDelete, isLoading, isEditDialogOpen, handleEditDialogOpen, handleCloseEditDialog, editCityId }
 }

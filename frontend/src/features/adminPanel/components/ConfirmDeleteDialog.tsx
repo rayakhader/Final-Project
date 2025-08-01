@@ -1,5 +1,5 @@
 import React from "react";
-import { ConfirmDialogProps } from "../types/types";
+import { ConfirmDialogProps } from "../types";
 
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({

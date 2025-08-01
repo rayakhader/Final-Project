@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { SearchResultHotelData } from "../../home/types/types";
-import { SearchFilters } from "../types/types";
+import { SearchResultHotelData } from "../../home/types";
+import { SearchFilters } from "../types";
 
 
 export function useSearchFilters(hotels:SearchResultHotelData[]){

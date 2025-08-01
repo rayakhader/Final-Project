@@ -1,14 +1,27 @@
-import React, { useState } from 'react'
-import { CityFormProps } from '../types/types'
+import React, { useEffect } from 'react'
 import { useCityForm } from '../hooks/useCityForm'
+import { CityFormProps } from '../types/cities.types'
+import { getCityById } from '../services/cities'
 
-const CityForm: React.FC<CityFormProps> = ({ onClose, onRefetch }) => {
-  const { name, description, onChangeName, onChangeDescription, onAddCity } = useCityForm()
+const CityForm: React.FC<CityFormProps> = ({ onClose, onRefetch, selectedCity, type }) => {
+  const { name, description, onChangeName, onChangeDescription, onAddCity, onEditCity } = useCityForm()
   const isEmptyFields = !name || !description
+
+  useEffect(() => {
+    if (!selectedCity) return
+    getCityById(selectedCity).then((data) => {
+      onChangeName(data.name)
+      onChangeDescription(data.description)
+    })
+  }, [selectedCity])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    onAddCity()
+    if (type === 'add') {
+      onAddCity()
+    } else if (selectedCity) {
+      onEditCity(selectedCity)
+    }
     onRefetch()
     onClose()
   }

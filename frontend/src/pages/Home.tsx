@@ -3,7 +3,7 @@ import '../features/home/styles/home.css';
 import { getFeatureDeals } from '../features/home/services/getFeatureDeals'
 import { getRecentHotel } from '../features/home/services/getRecentHotel'
 import { getTrendingDest } from '../features/home/services/getTrendingDest'
-import { FeatureDealData,RecentlyVisitedHotelData,DestinationData } from '../features/home/types/types'
+import { FeatureDealData,RecentlyVisitedHotelData,DestinationData } from '../features/home/types'
 import SearchBar from '../features/home/components/Search'
 import FeatureDeals from '../features/home/components/FeatureDeals'
 import RecentlyVisited from '../features/home/components/RecentlyVisited'

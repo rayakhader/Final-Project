@@ -1,5 +1,5 @@
 import React from 'react'
-import { RecentlyVisitedHotelData } from '../types/types';
+import { RecentlyVisitedHotelData } from '../types';
 
 
 function RecentlyVisited({list}:{list:RecentlyVisitedHotelData []}) {

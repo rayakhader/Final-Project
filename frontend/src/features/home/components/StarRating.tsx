@@ -1,5 +1,5 @@
 import React from 'react';
-import { StarRatingProps } from '../types/types';
+import { StarRatingProps } from '../types';
 
 const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
   const fullStars = Math.floor(rating);

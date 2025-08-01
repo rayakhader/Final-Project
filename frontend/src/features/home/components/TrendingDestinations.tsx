@@ -1,5 +1,5 @@
 import React from 'react';
-import { DestinationData } from '../types/types';
+import { DestinationData } from '../types';
 
 function TrendingDestinations({list}:{list:DestinationData[]}) {
   return (

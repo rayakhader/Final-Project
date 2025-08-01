@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { AvailableRoom, HotelDetails, Review } from "../types/types"
+import { AvailableRoom, HotelDetails, Review } from "../types"
 import { getCartItemsFromStorage, saveCartItemsToStorage } from "../../../utils/cartStorage"
 import { getAvailableRoomsByHotelId } from "../services/getAvailableRoomsByHotelId"
 import { getHotelById } from "../services/getHotelById"

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { FaShoppingBag } from 'react-icons/fa';
 import '../features/searchResults/styles/search.css';
-import { SearchResultHotelData } from '../features/home/types/types';
+import { SearchResultHotelData } from '../features/home/types';
 import { useSearchFilters } from '../features/searchResults/hooks/useSearchFilters';
 import { getSearchResults } from '../features/searchResults/services/getSearchResults';
 import LoadingSpinner from '../components/LoadingSpinner';

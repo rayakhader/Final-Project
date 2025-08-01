@@ -1,8 +1,8 @@
 import React from 'react'
-import { AddDialogProps } from '../types'
+import { EditDialogProps } from '../types'
 
 
-const AddDialog: React.FC<AddDialogProps> = ({ title, isOpen, onClose, children }) => {
+const EditDialog: React.FC<EditDialogProps> = ({ title, isOpen, onClose, children }) => {
     if (!isOpen) return null
 
     return (
@@ -23,4 +23,4 @@ const AddDialog: React.FC<AddDialogProps> = ({ title, isOpen, onClose, children 
     )
 }
 
-export default AddDialog
+export default EditDialog

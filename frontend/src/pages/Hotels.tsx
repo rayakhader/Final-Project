@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { getHotels } from '../features/adminPanel/services/getHotels'
-import DataTable from '../components/DataTable'
-import { Hotel } from '../features/adminPanel/types/types'
+import DataTable from '../components/table/DataTable'
+import { Hotel } from '../features/adminPanel/types/hotels.types'
+// import { Hotel } from '../features/adminPanel/types/types'
 
 function Hotels() {
   const [hotels, setHotels] = useState<Hotel[]>([])

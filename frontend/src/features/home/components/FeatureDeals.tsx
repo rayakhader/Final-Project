@@ -1,4 +1,4 @@
-import { FeatureDealData } from "../types/types"
+import { FeatureDealData } from "../types"
 import StarRating from "./StarRating"
 
 function FeatureDeals({ list }: { list: FeatureDealData[] }) {

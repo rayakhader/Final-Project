@@ -1,12 +1,8 @@
-// import Header from "@/layout/Header";
-// import Sidebar from "@/layout/Sidebar";
-// import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 
 function MainLayout() {
-  // const {i18n} =useTranslation()
   return (
     <div className="flex min-h-screen">
       <Sidebar />
