@@ -1,13 +1,18 @@
+import { useNavigate } from "react-router-dom"
 import { FeatureDealData } from "../types"
 import StarRating from "./StarRating"
 
 function FeatureDeals({ list }: { list: FeatureDealData[] }) {
+  const navigate = useNavigate()
+  function handleViewHotel (hotelId:number){
+    navigate(`/hotels/${hotelId}`)
+  }
   return (
     <div>
       <h2>Feature Deals</h2>
       <div className="feature-deals">
         {list.map((hotel) => (
-          <div key={hotel.hotelId} className="hotel-card">
+          <div key={hotel.hotelId} className="hotel-card" onClick={()=>handleViewHotel(hotel.hotelId)}>
             <div className='hotel-gallery'>
               <img src={hotel.roomPhotoUrl} alt={hotel.hotelName} className="hotel-image" />
             </div>

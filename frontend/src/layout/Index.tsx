@@ -7,7 +7,7 @@ function MainLayout() {
     <div className="flex min-h-screen">
       <Sidebar />
       <div className={`p-5 flex flex-col flex-1 w-[calc(100%-3.5rem)] md:ml-[280px] ml-3.5rem overflow-hidden`}>
-        <Header />
+        {/* <Header /> */}
         <Outlet />
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getHotels } from '../features/adminPanel/services/getHotels'
+import { getHotels } from '../features/adminPanel/services/hotels'
 import DataTable from '../components/table/DataTable'
 import { Hotel } from '../features/adminPanel/types/hotels.types'
 // import { Hotel } from '../features/adminPanel/types/types'

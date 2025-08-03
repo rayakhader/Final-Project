@@ -12,14 +12,17 @@
   font-size: 16px;
 }
 
-.date-section, .guest-section {
+.date-section,
+.guest-section {
   display: flex;
   gap: 12px;
 }
 
-input[type="date"], input[type="number"] {
+input[type="date"],
+input[type="number"] {
   padding: 4px;
 }
+
 .search-button {
   padding: 10px 20px;
   font-size: 16px;
@@ -29,7 +32,8 @@ input[type="date"], input[type="number"] {
   border-radius: 4px;
   cursor: pointer;
 }
-.feature-deals{
+
+.feature-deals {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +41,9 @@ input[type="date"], input[type="number"] {
   padding: 20px;
   flex-wrap: wrap;
 }
-.prev-arrow, .next-arrow {
+
+.prev-arrow,
+.next-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -45,31 +51,38 @@ input[type="date"], input[type="number"] {
   padding: 8px;
   cursor: pointer;
 }
+
 .next-arrow {
   right: 0px;
 }
+
 .hotel-card {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
   width: 250px;
-  position:relative;
+  position: relative;
+  cursor: pointer;
 }
+
 .hotel-image {
   width: 100%;
   height: 150px;
   object-fit: cover;
   border-radius: 8px;
 }
-.hotel-gallery{
+
+.hotel-gallery {
   position: relative;
 }
+
 .recent-hotels {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
 }
+
 .destinations {
   display: flex;
   flex-wrap: wrap;
@@ -80,9 +93,11 @@ input[type="date"], input[type="number"] {
 .destination-card {
   width: 200px;
   text-align: center;
+  cursor: pointer;
 }
 
-.destination-card img, .hotel-card img {
+.destination-card img,
+.hotel-card img {
   width: 100%;
   height: 120px;
   object-fit: cover;
@@ -93,27 +108,34 @@ input[type="date"], input[type="number"] {
   margin-top: 5px;
   font-weight: bold;
 }
-h2{
+
+h2 {
   padding: 10px;
   opacity: 0;
   transform: translateY(20px);
   animation: slideFadeIn 0.8s ease forwards;
 }
+
 @keyframes slideFadeIn {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-.hotel-card:hover, .destination-card:hover {
+
+.hotel-card:hover,
+.destination-card:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
-.hotel-card, .destination-card {
+
+.hotel-card,
+.destination-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.hotel-image, .destination-card img {
+.hotel-image,
+.destination-card img {
   transition: transform 0.3s ease;
 }
 
@@ -131,23 +153,27 @@ h2{
   transform: scale(1.05);
 }
 
-.hotel-card,.destination-card{
+.hotel-card,
+.destination-card {
   opacity: 0;
   animation: fadeIn 0.5s forwards;
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
+
 .spinner-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px; 
+  min-height: 300px;
 }
 
 .spinner {
@@ -160,6 +186,7 @@ h2{
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
-

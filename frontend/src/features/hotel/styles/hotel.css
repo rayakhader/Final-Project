@@ -299,8 +299,7 @@ body {
   background-color: var(--background);
 }
 
-.date-picker button:disabled,
-.add-to-cart-btn:disabled {
+.date-picker button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }

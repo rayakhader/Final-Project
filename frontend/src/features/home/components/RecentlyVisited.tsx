@@ -1,9 +1,12 @@
 import React from 'react'
 import { RecentlyVisitedHotelData } from '../types';
+import { useNavigate } from 'react-router-dom';
 
 
-function RecentlyVisited({list}:{list:RecentlyVisitedHotelData []}) {
-  const renderStars = (rating:number) => (
+function RecentlyVisited({ list }: { list: RecentlyVisitedHotelData[] }) {
+  const navigate = useNavigate()
+
+  const renderStars = (rating: number) => (
     <>
       {Array(rating).fill(0).map((_, i) => (
         <span key={i} style={{ color: 'gold' }}>★</span>
@@ -13,13 +16,16 @@ function RecentlyVisited({list}:{list:RecentlyVisitedHotelData []}) {
       ))}
     </>
   );
+  function handleViewHotel(hotelId: number) {
+    navigate(`/hotels/${hotelId}`)
+  }
 
   return (
     <div>
       <h2>User's Recently Visited Hotels</h2>
       <div className="recent-hotels">
         {list.map(hotel => (
-          <div key={hotel.hotelId} className="hotel-card">
+          <div key={hotel.hotelId} className="hotel-card" onClick={() => handleViewHotel(hotel.hotelId)}>
             <img src={hotel.thumbnailUrl} alt={hotel.hotelName} className='hotel-image' />
             <h3>{hotel.hotelName}</h3>
             <p>{hotel.cityName}</p>

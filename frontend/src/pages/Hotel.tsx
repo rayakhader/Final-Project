@@ -19,17 +19,17 @@ function Hotel() {
     onChangeCheckOut,
     onToggleFullScreen,
     handleFetchAvailableRoom,
-    handleAddToCart,
+    handleAddOrRemove,
     handleOpenCart,
     isAvailabilityCheckDisabled,
     isRoomInCart } = useHotel()
-    
+
   if (loading) return <LoadingSpinner />
 
   return (
     <div className="hotel-page">
       <header className="hotel-header">
-        <button className="cart-button" onClick={handleOpenCart} disabled={cartItems.length===0}>
+        <button className="cart-button" onClick={handleOpenCart} disabled={cartItems.length === 0}>
           {MdShoppingBag({ size: 24 }) as JSX.Element}
           <span className='cart-items'>{cartItems.length}</span>
         </button>
@@ -94,8 +94,8 @@ function Hotel() {
                 <p>No available rooms for the selected dates.</p>
               )}
               {availableRooms.map((room) => {
-                function handleAddRoomToCart() {
-                  handleAddToCart(room.roomId);
+                function handleCart() {
+                  handleAddOrRemove(room.roomId);
                 }
                 return (<div key={room.roomId} className="room-card">
                   <img src={room.roomPhotoUrl} alt={`Room ${room.roomNumber}`} className="room-image" />
@@ -110,7 +110,7 @@ function Hotel() {
                         <span key={idx} className="amenity-chip">{amenity.name}</span>
                       ))}
                     </div>
-                    <button disabled={isRoomInCart(room.roomId)} className="add-to-cart-btn" onClick={handleAddRoomToCart}>Add to cart</button>
+                    <button className="add-to-cart-btn" onClick={handleCart}>{isRoomInCart(room.roomId) ? 'Remove' : 'Add'}</button>
                   </div>
                 </div>
                 )

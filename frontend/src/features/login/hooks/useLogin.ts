@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TokenContext } from '../../../context/TokenProvider';
 import { login } from '../services/login';
+import { UserTypeContext } from '../../../context/UserTypeProvider';
+import { jwtDecode } from 'jwt-decode';
 
 
 type Errors = {
@@ -17,7 +19,8 @@ export function useLogin() {
   const [errors, setErrors] = useState<Errors>({ username: '', password: '' });
   const [status, setStatus] = useState<Status>("idle")
   const navigate = useNavigate();
-  const {setToken} = useContext(TokenContext)
+  const { setToken } = useContext(TokenContext)
+  const { setUserType } = useContext(UserTypeContext)
 
   function validateUsername(value: string) {
     if (value.length < 3) {
@@ -58,8 +61,8 @@ export function useLogin() {
       localStorage.setItem('token', data.authentication);
       localStorage.setItem('userType', data.userType);
       setToken(data.authentication)
+      setUserType(data.userType)
       setStatus("success");
-      setTimeout(() => navigate('/'), 1000);
     } catch (err) {
       console.error('Login error:', err);
       setStatus("error");

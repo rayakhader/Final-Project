@@ -40,8 +40,20 @@ export function useHotel() {
             getAvailableRoomsByHotelId(parseInt(id), checkIn, checkOut).then((data) => setAvailableRooms(data))
         }
     }
+    function handleAddOrRemove(id: number) {
+        if (isRoomInCart(id)) {
+            handleRemoveFromCart(id)
+        } else {
+            handleAddToCart(id)
+        }
+    }
     function handleAddToCart(id: number) {
         const updatedItems = [...cartItems, id]
+        setCartItems(updatedItems)
+        saveCartItemsToStorage(updatedItems)
+    }
+    function handleRemoveFromCart(id: number) {
+        const updatedItems = cartItems.filter((c) => c !== id)
         setCartItems(updatedItems)
         saveCartItemsToStorage(updatedItems)
     }
@@ -107,7 +119,7 @@ export function useHotel() {
         onChangeCheckOut: handleChangeCheckOut,
         onToggleFullScreen: handleToggleFullScreen,
         handleFetchAvailableRoom,
-        handleAddToCart,
+        handleAddOrRemove,
         handleOpenCart,
         isAvailabilityCheckDisabled,
         isRoomInCart

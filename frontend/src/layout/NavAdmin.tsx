@@ -38,14 +38,6 @@ function NavUser() {
       <ul className="hidden md:flex items-center gap-6">
         <li>
           <Link
-            to="/bookings"
-            className="text-gray-700 font-medium hover:text-blue-600 transition"
-          >
-            My Bookings
-          </Link>
-        </li>
-        <li>
-          <Link
             to="/profile"
             className="text-gray-700 font-medium hover:text-blue-600 transition"
           >
@@ -85,15 +77,6 @@ function NavUser() {
             onClick={(e) => e.stopPropagation()}
           >
             <ul className="flex flex-col gap-6 text-lg">
-              <li>
-                <Link
-                  to="/bookings"
-                  onClick={() => setOpen(false)}
-                  className="text-gray-800 hover:text-blue-600 transition"
-                >
-                  My Bookings
-                </Link>
-              </li>
               <li>
                 <Link
                   to="/profile"

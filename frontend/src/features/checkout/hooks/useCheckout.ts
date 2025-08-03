@@ -39,7 +39,7 @@ export function useCheckout() {
             phone: Yup.string().matches(/^\+?[0-9]{7,15}$/, 'Phone number is not valid').required('Phone is required'),
             paymentMethod: Yup.string().required('Payment method is required')
         }),
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             if (!selectedRoomId) {
                 Swal.fire('Please select a room.', '', 'warning');
                 return;
@@ -48,14 +48,31 @@ export function useCheckout() {
             const roomDetails = rooms.find((room) => room.roomId === selectedRoomId);
             if (!roomDetails || !hotel) return;
 
-            submitBooking(
-                values.fullName,
-                hotel.hotelName,
-                roomDetails.roomNumber,
-                roomDetails.roomType,
-                roomDetails.price,
-                values.paymentMethod
-            ).then((data) => {
+            try {
+                const data = await submitBooking(
+                    values.fullName,
+                    hotel.hotelName,
+                    roomDetails.roomNumber,
+                    roomDetails.roomType,
+                    roomDetails.price,
+                    values.paymentMethod
+                );
+
+                const existing = JSON.parse(localStorage.getItem('bookings') || '[]');
+                const updatedBookings = [
+                    ...existing,
+                    {
+                        fullName: values.fullName,
+                        hotelName: hotel.hotelName,
+                        roomNumber: roomDetails.roomNumber,
+                        roomType: roomDetails.roomType,
+                        price: roomDetails.price,
+                        paymentMethod: values.paymentMethod,
+                        confirmationNumber: data.confirmationNumber,
+                    },
+                ];
+                localStorage.setItem('bookings', JSON.stringify(updatedBookings));
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Booking Confirmed!',
@@ -66,13 +83,13 @@ export function useCheckout() {
                         state: { confirmationDetails: data },
                     });
                 });
-            }).catch(() => {
+            } catch (error) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Booking Failed',
                     text: 'Something went wrong while submitting your booking.',
                 });
-            });
+            }
         },
     });
     function handleChangeRoomId(e: React.ChangeEvent<HTMLInputElement>) {

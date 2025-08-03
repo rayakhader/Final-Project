@@ -1,13 +1,19 @@
 import React, { useContext } from 'react'
-import './styles/nav.css'
 import { TokenContext } from '../context/TokenProvider'
 import NavUser from './NavUser'
 import NavGuest from './NavGuest'
+import { Outlet } from 'react-router-dom'
+import { UserTypeContext } from '../context/UserTypeProvider'
+import NavAdmin from './NavAdmin'
 
 function Nav() {
-    const {token} = useContext(TokenContext)
+  const { token } = useContext(TokenContext)
+  const { userType } = useContext(UserTypeContext)
   return (
-    token? <NavUser /> : <NavGuest />
+    <>
+      {token ? (userType === 'User' ? <NavUser /> : <NavAdmin />) : <NavGuest />}
+      <Outlet />
+    </>
   )
 }
 
