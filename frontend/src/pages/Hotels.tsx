@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { getHotels } from '../features/adminPanel/services/hotels'
-import DataTable from '../components/table/DataTable'
-import { Hotel } from '../features/adminPanel/types/hotels.types'
+import React, { useEffect, useState } from "react";
+import { getHotels } from "../features/adminPanel/services/hotels";
+import DataTable from "../components/table/DataTable";
+import { Hotel } from "../features/adminPanel/types/hotels.types";
 // import { Hotel } from '../features/adminPanel/types/types'
 
 function Hotels() {
-  const [hotels, setHotels] = useState<Hotel[]>([])
+  const [hotels, setHotels] = useState<Hotel[]>([]);
   useEffect(() => {
-    getHotels()
-      .then((data) => {
-        setHotels(data)
-      })
-  }, [])
+    getHotels().then((data) => {
+      setHotels(data);
+    });
+  }, []);
   return (
-    <div className='border-2 border-gray-400 p-2 rounded-xl shadow-xl'>
-      <h1 className='font-start'>Manage Hotels</h1>
+    <div className="border-2 border-gray-400 p-2 rounded-xl shadow-xl">
+      {/* <h1 className='font-start'>Manage Hotels</h1> */}
       {/* <DataTable
         data={hotels}
         columns={[
@@ -26,9 +25,8 @@ function Hotels() {
         onOpenConfirmDeleteDialog={(id) => console.log("Delete", id)}
         isLoading={false}
       /> */}
-
     </div>
-  )
+  );
 }
 
-export default Hotels
+export default Hotels;
