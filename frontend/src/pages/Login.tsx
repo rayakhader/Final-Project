@@ -15,7 +15,7 @@ function Login() {
     return (
         <div className='login'>
             <h1>Login</h1>
-            <form action="" className='login-form' onSubmit={handleSubmit}>
+            <form data-testid='login-form' action="" className='login-form' onSubmit={handleSubmit}>
                 <label htmlFor="username">Username</label>
                 <input type="text" name='username' id='username' value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Enter your username....' />
                 {errors.username && <p className='error'>{errors.username}</p>}

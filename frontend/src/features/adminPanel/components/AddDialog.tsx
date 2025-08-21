@@ -6,7 +6,7 @@ const AddDialog: React.FC<AddDialogProps> = ({ title, isOpen, onClose, children 
     if (!isOpen) return null
 
     return (
-        <div className="fixed top-0 left-0 w-screen h-screen bg-black/40 flex items-center justify-center z-[999]">
+        <div className="fixed top-0 left-0 w-screen h-screen bg-black/40 flex items-center justify-center z-[1002]">
             <div className="bg-white p-5 w-[500px] rounded-lg shadow-md">
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold">{title}</h2>
