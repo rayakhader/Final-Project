@@ -1,30 +1,35 @@
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './components/Auth/Login';
-import Home from './components/HomePage/Home';
-import Nav from './components/Nav/Nav';
-import SearchResultsPage from './components/SearchResultsPage/SearchResultsPage';
-import Hotel from './components/Hotel/Hotel';
-import { useContext } from 'react';
-import { TokenContext } from './context/TokenProvider';
-import Checkout from './components/CheckoutPage/Checkout';
-import ConfirmationPage from './components/CheckoutPage/ConfirmationPage';
+import { appRoutes } from './routes/appRoutes';
 
+
+export interface AppRoute {
+  path?: string,
+  index?: boolean;
+  element: React.ReactNode
+  children?: AppRoute[]
+}
 function App() {
-  const {token} = useContext(TokenContext)
+  function renderRoutes(routes: AppRoute[]) {
+    return routes.map(({ path, index, element, children }) => {
+      if (index) {
+        return (
+          <Route key="index" index element={element} />
+        );
+      } else {
+        return (
+          <Route key={path} path={path} element={element}>
+            {children && renderRoutes(children)}
+          </Route>
+        );
+      }
+    })
+  }
   return (
-      <Router>
-        <Nav />
-      <Routes>
-        <Route path='/' element={token? <Home /> : <Navigate to='/login' replace />} />
-        <Route path='/search-results' element={<SearchResultsPage />} />
-        <Route path='/hotels/:id' element={<Hotel />} />
-        <Route path='/hotels/:hotelId/checkout' element={<Checkout />} />
-        <Route path='/hotels/:hotelId/checkout/confirmation' element={<ConfirmationPage />} />
-        <Route path='/login' element={<Login />} />
-      </Routes>
-      </Router>
+    <Router>
+      <Routes>{renderRoutes(appRoutes)}</Routes>
+    </Router>
   );
 }
 
 export default App;
+
